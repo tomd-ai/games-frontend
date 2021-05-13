@@ -1,0 +1,37 @@
+[
+    {
+        "key" : "_1",
+        "name" : "Country",
+        "answer" : ""
+    },
+    {
+        "key" : "_2",
+        "name" : "Capital city",
+        "answer" : ""
+    },
+    {
+        "key" : "_3",
+        "name" : "Animal",
+        "answer" : ""
+    },
+    {
+        "key" : "_4",
+        "name" : "Vegetable/Fruit",
+        "answer" : ""
+    },
+    {
+        "key" : "_5",
+        "name" : "Movie name",
+        "answer" : ""
+    },
+    {
+        "key" : "_6",
+        "name" : "Car brand",
+        "answer" : ""
+    },
+    {
+        "key" : "_7",
+        "name" : "Singer/band",
+        "answer" : ""
+    }
+]
