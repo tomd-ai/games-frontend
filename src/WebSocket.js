@@ -98,7 +98,7 @@ export default ({ children }) => {
     //////////////////////////////////////////////////////////////////////////
     // categories
 
-    categoriesSocket = io('http://localhost:8000/' + "categories");
+    categoriesSocket = io('https://tom-games.azurewebsites.net/' + "categories");
     
     categoriesSocket.on('connect',
         () => {
