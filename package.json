@@ -1,6 +1,6 @@
 {
-  "homepage": "https://tomdavenport50.github.io/portfolio-frontend",
-  "name": "portfolio-frontend",
+  "homepage": "https://tomd-ai.github.io/games-frontend",
+  "name": "games-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

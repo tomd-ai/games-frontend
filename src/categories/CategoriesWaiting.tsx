@@ -88,7 +88,7 @@ function CategoriesWaiting(props:any) {
 
     // direct link 
     function linkToClipboard(e:any){
-        navigator.clipboard.writeText(`http://localhost:3000/portfolio-frontend#/join-categories/${gameID}`)
+        navigator.clipboard.writeText(`http://localhost:3000/games-frontend#/join-categories/${gameID}`)
         // This is just personal preference.
         // I prefer to not show the whole text area selected.
         e.target.focus();
