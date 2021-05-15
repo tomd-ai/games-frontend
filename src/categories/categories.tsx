@@ -3,10 +3,6 @@ import {Link, useHistory} from 'react-router-dom';
 import Category from "../models";
 import sampleCategories from "./sampleCategories.json";
 import { v4 as uuidv4 } from 'uuid';
-import store from "../store";
-import {createRoom, setUsername, joinRoom} from "../actions";
-import WebsocketProvider, {WebSocketContext} from "../WebSocket";
-import {Provider, useSelector, useDispatch} from "react-redux";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 
@@ -65,7 +61,6 @@ function CategoriesStart() {
     const [categoryError, setCategoryError] = useState(false)
     
     const history = useHistory();
-    const dispatch = useDispatch();
     // const ws = useContext(WebSocketContext);
 
     let [gameID, setGameID] = useLocalStorage('gameID', '')

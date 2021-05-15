@@ -88,7 +88,10 @@ function CategoriesWaiting(props:any) {
 
     // direct link 
     function linkToClipboard(e:any){
-        navigator.clipboard.writeText(`https://tomd-ai.github.io/games-frontend#/join-categories/${gameID}`)
+        
+        let baseJoinLink = ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ? "http://localhost:3000" : "https://tomd-ai.github.io"
+
+        navigator.clipboard.writeText(`${baseJoinLink}/games-frontend#/join-categories/${gameID}`)
         // This is just personal preference.
         // I prefer to not show the whole text area selected.
         e.target.focus();
@@ -96,7 +99,9 @@ function CategoriesWaiting(props:any) {
     }
 
 
-    
+    function refreshPage(){
+        window.location.reload()
+    }
     
     return (
     <div className="project">
@@ -110,20 +115,34 @@ function CategoriesWaiting(props:any) {
         <p>{copySuccess}</p>
 
         <p>Current players:</p>
-        <ol>
-        {
-            playerList.map(
-                    (player: Player ) => {
-                        return (
-                        <li className="player" key={player.userID}>
-                        {player.userName}
-                        {player.gameLeader ?  " (Game leader)" : "" }
-                        </li>
-                        )
-                    }
-                )
+        <table>
+        <thead>
+        </thead>
+        <tbody>
+            {
+                playerList.map(
+                        (player: Player, ind: number ) => {
+                            return (
+                            <tr key={player.userID}>
+                                <td>
+                                    {ind + 1}.
+                                </td>
+                                <td>
+                                    {player.userName}
+                                </td>
+                                <td>
+                                    {player.gameLeader ?  " (Game leader)" : "" }
+                                </td>
+                            </tr>
+                            )
+                        }
+                    )
+            }
+        </tbody>
+        </table>
+        { 
+            playerList.length == 0 ? <> Can't see any other players? <button onClick={()=>{refreshPage()}}>Refresh</button>  </>: <></> 
         }
-        </ol>
         { playerData.gameLeader && <div> 
         <p>3. Click start game:</p>
             <button className="start-game" onClick={()=>{handleSendStart()}}>Start Game</button>

@@ -1,6 +1,5 @@
 import React, {useState, useRef, useContext, useCallback, useEffect} from 'react';
 import {Link, useHistory, useLocation} from 'react-router-dom';
-import WebsocketProvider, {WebSocketContext} from "../WebSocket";
 import {Provider, useSelector, useDispatch} from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from "../hooks/useLocalStorage";
