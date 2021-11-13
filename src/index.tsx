@@ -4,12 +4,21 @@ import { HashRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import allReducers from './reducers'
+import {createStore} from 'redux';
+import { Provider } from 'react-redux';
+
+const store = createStore(
+    allReducers
+)
 
 ReactDOM.render(
   <React.StrictMode>
-      <HashRouter>
-        <App />
-    </HashRouter>
+    <Provider store={store}>
+        <HashRouter>
+            <App />
+        </HashRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

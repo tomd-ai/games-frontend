@@ -181,19 +181,16 @@ function CategoriesStart() {
 
     // submit form
 
-    
-
-
     function startGame(event:any){
-        
+
         setGameData(
             {
                 "categories" : categoryList.list,
                 "gameLetter" : gameLetter
             }
         )
-        
-            // check that the player has at least one category
+
+        // check that the player has at least one category
         setCategoryError(categoryList.list.length === 0) 
         setUserNameError(!userName)
 
@@ -217,11 +214,25 @@ function CategoriesStart() {
     return (
     <div className="project">
         <p>A multiplayer game - find a word that starts with the following letter for each category!</p>
-        <p>Letter to guess : <span className="gameLetter" id="gameLetter">{gameLetter}</span></p>
-        <button id="newLetter" onClick={()=>{newLetter()}}>Change letter</button>
-        <p>As the game leader, it's up to you to set the game up!</p>
-        <p>Click a category to change the name, or the button to remove it. </p>
+        
+        <p className="explainer">
+            As the game leader, it's up to you to set the game up!
+        </p>
+        
+        <p>Letter to guess: </p>
+        <span className="gameLetter" id="gameLetter">{gameLetter}</span>
+        <button 
+            id="newLetter"
+            onClick={()=>{newLetter()}}
+            style={{
+                "marginLeft": "20px"
+            }}
+        >
+            New letter
+        </button>
+
         <p>1. (Optional) Change or add more categories:</p>
+        <p className="explainer">Click a category to change the name, or the button to remove it. </p>
         { 
             categoryList.list.map(
                 (category: Category) => {
@@ -241,8 +252,24 @@ function CategoriesStart() {
                 }
             )
         }
-        <button type="button" onClick={() =>handleAdd()}> Add category </button>
-        <button type="button" onClick={() =>handleReset()}> Reset to default </button>
+
+        <button
+            type="button"
+            onClick={() =>handleAdd()}
+            style={{
+                "marginRight": "5px"
+            }}
+        >
+            Add category
+        </button>
+
+        <button
+            type="button"
+            onClick={() =>handleReset()}
+        >
+            Reset to default
+        </button>
+
         <p className={ categoryError ? "showError" : "hideError" }>Please have at least one category before continuing.</p>
         <p>2. Enter your user name:</p>
         
@@ -251,16 +278,24 @@ function CategoriesStart() {
             id="username" 
             placeholder="Add username" 
             onChange={(e)=>{handleUserNameChange(e)}} 
-            value={userName} 
+            value={userName}
+            style={{
+                "paddingRight": "5px"
+            }}
         />
+
         <p className={ userNameError ? "showError" : "hideError" }>Please enter a username before continuing.</p>
         <p>3. Click start game:</p>
-        <button className="start-game" onClick={(e)=>{startGame(e)}}>Start Game</button>
-        {/* <p>Looking to join someone else's game?</p>
-        <Link to='join-game'>
-            <button type="button">Join an existing game</button>
-        </Link> */}
-    
+
+        <button 
+            className="start-game" 
+            onClick={(e)=>{startGame(e)}}
+            style={{
+                "marginBottom": "20px"
+            }}
+        >
+            Start Game
+        </button>
     </div>
   );
 }

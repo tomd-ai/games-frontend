@@ -4,7 +4,9 @@ import allGames from "../gamedata";
 
 type game = {
     id : string,
-    name : string
+    name : string,
+    biline: string,
+    url: string
 }
 
 function GamesList() {
@@ -12,7 +14,14 @@ function GamesList() {
         <div className="about-message">
           <p>Click an option below to start a game!</p>
         </div>
-        { allGames.map( (game: game) => <GameItem id={game.id} name={game.name}  />  )}
+        { 
+            allGames.map(
+                (game: game) => {
+                    return <GameItem id={game.id} name={game.name} biline={game.biline} url={game.url} />
+                }
+            )
+        }
+
       </div>
     
   }
