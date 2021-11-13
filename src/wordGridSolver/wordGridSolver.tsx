@@ -1,8 +1,6 @@
 import {useState, useRef, useContext, useCallback, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {wordGridSolverSocketContext}  from '../context/socket2'
-import {clearWordGridSolver} from "../actions/actions"
 import Webcam from 'react-webcam';
 
 const videoConstraints = {
@@ -14,14 +12,11 @@ const videoConstraints = {
 
 function WordGridSolver(props:any) {
 
-    const dispatch = useDispatch();
-    const history = useHistory();
     const wordGridSolverSocket = useContext(wordGridSolverSocketContext);
     const gridData = useSelector((s:any) => s.wordGridSolverData);
     const webcamRef = useRef<Webcam>(null);
     const [imgSrc, setImgSrc] = useState<string | null>(null);
 
-    let emptyBoard = useRef(true)
     let keepLooking = useRef(true)
 
     // useEffect(()=>{
@@ -49,7 +44,7 @@ function WordGridSolver(props:any) {
             // console.log(data["imgWithBoundaries"])
             keepLooking.current = false
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -72,7 +67,7 @@ function WordGridSolver(props:any) {
             // unbind all event handlers used in this component
             wordGridSolverSocket.off("solved-image", handleSearchBoundaries)
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wordGridSolverSocket, handleSearchBoundaries])
 
     const capture = useCallback(
@@ -87,6 +82,7 @@ function WordGridSolver(props:any) {
                 })
             }
         },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
         [webcamRef]
     );
 
@@ -127,7 +123,7 @@ function WordGridSolver(props:any) {
         }</td>
         <td>
             {
-                imgSrc && <img src={imgSrc} />
+                imgSrc && <img alt="" src={imgSrc} />
             }
         </td>
         </tr>

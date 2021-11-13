@@ -1,16 +1,9 @@
-import React, {useState, useRef, useContext, useCallback, useEffect} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Provider, useSelector, useDispatch} from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
+import {useState, useContext, useCallback, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import useLocalStorage from "../hooks/useLocalStorage";
-import Category from "../models";
-import {socket, SocketContext}  from '../context/socket2'
+import {SocketContext}  from '../context/socket2'
 
-type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
-}
+
 
 type AnswerList = [
     gameID : string,
@@ -28,9 +21,6 @@ type Answers = [
     }
 ]
 
-type MarkedRows = [
-    string[] 
-]
 
 function CategoriesScoring(props:any) {
 
@@ -38,15 +28,16 @@ function CategoriesScoring(props:any) {
     const history = useHistory();
     const categoriesSocket = useContext(SocketContext);
     
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage('gameID')
-    let [userName, setUserName] = useLocalStorage('userName')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameData, setGameData] = useLocalStorage('gameData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage('playerData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID')
-    let [userID, setUserID] = useLocalStorage('userID')
     let [returning, setReturning] = useLocalStorage('returning')
-    let [playerList, setPlayerList] = useLocalStorage('playerList')
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [categories, setCategories] = useState(gameData["categories"])
     let [allAnswers , setAllAnswers] = useState<AnswerList[]>([]); //useState([])
     
@@ -55,11 +46,13 @@ function CategoriesScoring(props:any) {
 
     const handleAnswerTable = useCallback( (data:any) => {
         setAllAnswers(data)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleUpdateScore = useCallback((data:any)=>{
         setMarkedRows(data["rowIds"])
         setUserScores(data["userScores"])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleMark = useCallback((rowInd : number, colInd: number, rowId : string)=>{
@@ -69,6 +62,7 @@ function CategoriesScoring(props:any) {
             colInd,
             rowInd
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleStartNewGame = useCallback( () => {
@@ -77,13 +71,14 @@ function CategoriesScoring(props:any) {
             gameID
         })
         console.log(returning)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         returning = setReturning(true)
-
         history.push(
             {
                 "pathname" : '/categories',
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleNewGameRequested = useCallback( ()=> {
@@ -96,16 +91,14 @@ function CategoriesScoring(props:any) {
                 "pathname" : "/categories-waiting-room"
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
-
-    
     useEffect( ()=>{
 
         console.log(allAnswers)
         
-        if (allAnswers.length == 0){
+        if (allAnswers.length === 0){
             console.log("doing this once")
             categoriesSocket.emit("join", {
                 gameID,
@@ -131,12 +124,13 @@ function CategoriesScoring(props:any) {
             categoriesSocket.off("update-scores", handleUpdateScore);
             categoriesSocket.off("start-new-game", handleNewGameRequested);
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoriesSocket, handleAnswerTable, handleUpdateScore, handleNewGameRequested])
 
 
     useEffect(() => {
         console.log(allAnswers)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allAnswers])
 
     
@@ -203,8 +197,9 @@ function CategoriesScoring(props:any) {
                             return (
                             <th>
                                 { 
+                                    // eslint-disable-next-line array-callback-return
                                     userScores.map((userScore:any)=>{
-                                        if (userScore["userID"] == user["userID"]){
+                                        if (userScore["userID"] === user["userID"]){
                                             return userScore["score"]
                                         }
                                     })

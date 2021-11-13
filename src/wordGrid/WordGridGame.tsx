@@ -11,14 +11,14 @@ function WordGridGame(props:any) {
     const history = useHistory();
     const wordGridSocket = useContext(wordGridSocketContext);
     
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage('gameID')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [userName, setUserName] = useLocalStorage('userName')
-    // let [gameData, setGameData] = useLocalStorage('gameData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage('playerData')
-    let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [userID, setUserID] = useLocalStorage('userID')
-    let [returning, setReturning] = useLocalStorage('returning')
-    let [playerList, setPlayerList] = useLocalStorage('playerList')
 
     let [minutes, setMinutes] = useState("")
     let [seconds, setSeconds] = useState("")
@@ -39,9 +39,10 @@ function WordGridGame(props:any) {
         setMinutes(data["minutes"])
         setSeconds(data["seconds"])
         
-        if ( data["minutes"] == 0 && data["seconds"] == 0 ){
+        if ( data["minutes"] === 0 && data["seconds"] === 0 ){
             handleForceEndGame()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleForceEndGame = useCallback(()=>{
@@ -66,6 +67,7 @@ function WordGridGame(props:any) {
                 "pathname" : '/wordGrid-scoring',
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -89,9 +91,7 @@ function WordGridGame(props:any) {
                 guess
             )
         }
-
-        
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleAnswerRes = useCallback((data: any)=>{
@@ -120,7 +120,7 @@ function WordGridGame(props:any) {
             setErrorStatusMessage("Sorry, word not found in the grid / dictionary")
             setNewWord("")
         }
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect( ()=>{
@@ -137,7 +137,7 @@ function WordGridGame(props:any) {
             wordGridSocket.off("end-game", handleForceEndGame);
             wordGridSocket.off("answer-res", handleAnswerRes);
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wordGridSocket, handleForceEndGame, handleTimerTick, handleAnswerRes])
 
     const handleKeyPress = (e:any) => {
@@ -149,7 +149,7 @@ function WordGridGame(props:any) {
     const rotateGrid = () => {
         // console.log(rotatePos)
         var curPos = rotatePos
-        if (curPos + 1 == 4){
+        if (curPos + 1 === 4){
             curPos = 0
             setRotatePos(curPos)
         }else{

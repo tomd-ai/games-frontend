@@ -1,33 +1,29 @@
-import React, {useState, useRef, useContext, useEffect} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Provider, useSelector, useDispatch} from "react-redux";
+import {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from "../hooks/useLocalStorage";
-import {clearWordGridEnteredWords} from "../actions/actions"
-
-type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
-}
 
 
 function WordGridJoin(props:any) {
 
-    const dispatch = useDispatch();
     const history = useHistory();
     
     const [userNameError, setUserNameError] = useState(false)
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage("gameID", '')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [gameData, setGameData] = useLocalStorage("gameData", {})
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [gameSessionID, setGameSessionID] = useLocalStorage("gameSessionID", "")
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [playerData, setPlayerData] = useLocalStorage("playerData", {})
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [playerList, setPlayerList] = useLocalStorage("playerList", [])
+    let [returning, setReturning] = useLocalStorage("returning", '')
     let [userName, setUserName] = useLocalStorage("userName", '')
     let [userID, setUserID] = useLocalStorage("userID", '')
-    let [gameData, setGameData] = useLocalStorage("gameData", {})
-    let [gameSessionID, setGameSessionID] = useLocalStorage("gameSessionID", "")
-    let [returning, setReturning] = useLocalStorage("returning", '')
-    let [playerData, setPlayerData] = useLocalStorage("playerData", {})
-    let [playerList, setPlayerList] = useLocalStorage("playerList", [])
-
+    
     useEffect(()=>{
         // reset any local storage stuff to defaults
         setGameID("")
@@ -38,7 +34,7 @@ function WordGridJoin(props:any) {
         setUserID("")
         setReturning(false)
         setPlayerList([])
-        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -65,10 +61,6 @@ function WordGridJoin(props:any) {
         )
     }
 
-    
-
-    
-
     function joinGameRoom(){
         setUserNameError(!userName)
         // check that the player has added a username
@@ -81,8 +73,6 @@ function WordGridJoin(props:any) {
                 "pathname" : '/wordGrid-waiting-room'
             }
         )
-
-        
     }
     
     return (

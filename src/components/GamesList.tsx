@@ -1,4 +1,3 @@
-import React from 'react';
 import GameItem from "./GameItem";
 import allGames from "../gamedata";
 

@@ -1,45 +1,43 @@
-import React, {useState, useRef, useContext, useEffect, useCallback} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
-import useLocalStorage from "../hooks/useLocalStorage";
+import {useState, useContext, useEffect, useCallback} from 'react';
 import {PictureSocketContext}  from '../context/socket2'
 import { v4 as uuidv4 } from 'uuid';
-
-type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
-}
 
 
 function PictureGuess(props:any) {
     // context stuff
     const pictureSocket = useContext(PictureSocketContext)
-    const history = useHistory();
     
     // class handlers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [copySuccess, setCopySuccess] = useState('');
     let [joinStatus, setJoinStatus] = useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [startButtonStatus, setStartButtonStatus] = useState('')
 
     // user data
     let [userName, setUserName] = useState('')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [userID, setUserID] = useState(uuidv4())
 
     // game data in general
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useState(getGameID())
     let [playerData, setPlayerData] = useState({})
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerStatus, setPlayerStatus] = useState('')
     let [playerList, setPlayerList] = useState([])
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameData, setGameData] = useState({})
     
     //current game
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [currentWord, setCurrentWord] = useState('')
-    let [currentAnswers, setCurrentAnswers] = useState([])
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [curGuess, setCurGuess] = useState('')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [currentPlayer, setCurrentPlayer] = useState('')
-    let [isCurrentPlayer, setIsCurrentPlayer] = useState(false)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [nextPlayer, setNextPlayer] = useState('')
-    let [isNextPlayer, setIsNextPlayer] = useState(false)
 
 
     function getGameID(){
@@ -54,17 +52,20 @@ function PictureGuess(props:any) {
 
     useEffect( () => {
         setUserName(userName)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userName])
 
 
     const handleJoinedRoom = useCallback(()=>{
         setJoinStatus('hideJoin')
         console.log(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleNewPlayer = useCallback( (data:any) =>{
         setPlayerList(data['playerList'])
         setGameData(data["gameData"])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // const handleStartGame = useCallback((data:any)=>{
@@ -100,7 +101,7 @@ function PictureGuess(props:any) {
             pictureSocket.off("new-player", handleNewPlayer);
             // pictureSocket.off("start-game", handleStartGame);
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pictureSocket])//, handleJoinedRoom, handleNewPlayer, handleStartGame])
     
 

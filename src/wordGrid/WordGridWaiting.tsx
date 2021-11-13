@@ -22,41 +22,28 @@ function WordGridWaiting(props:any) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage('gameID')
-    let [userName, setUserName] = useLocalStorage('userName')
-    // let [gameData, setGameData] = useLocalStorage('gameData', {})
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage('playerData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID')
-    let [userID, setUserID] = useLocalStorage('userID')
-    let [returning, setReturning] = useLocalStorage('returning')
-    let [playerList, setPlayerList] = useLocalStorage('playerList')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [joined, setJoined] = useState(false);
-    let enteredWords = useSelector((s:any) => s.wordGridEnteredWords)
+    
     let gameData = useSelector((s:any) => s.wordGridGameData)
+    let [playerList, setPlayerList] = useLocalStorage('playerList')
 
-    useEffect(() => {
-
-    }, []
-    )
-
-    // console.log(gameData)
-
-    // let [enteredWords, setEnteredWords] = useLocalStorage('enteredWords')
-
-    // useEffect(()=>{
-    //     // reset any local storage stuff to defaults
-    //     setEnteredWords([])
-    // }, [])
+    // TODO: dump this so the build process works
 
     const handleJoinedRoom = useCallback(()=>{
         setJoined(true)
-        // console.log(true)
     }, [])
 
     const handleNewPlayer = useCallback( (data:any) =>{
         setPlayerList(data['playerList'])
         dispatch(setWordGridGameData(data["gameData"]))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleStartGame = useCallback((data:any)=>{
@@ -65,23 +52,26 @@ function WordGridWaiting(props:any) {
                 "pathname" : '/wordGrid-game-room'
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleSendStart = useCallback(()=>{
         console.log("START!")
         wordGridSocket.emit("send-start", {gameID})
         wordGridSocket.emit("start-timer", {gameID})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleBootedPlayer = useCallback( (data:any) =>{
         setPlayerList(data['playerList'])
-        if (playerData["userID"] == data["bootPlayerID"]){
+        if (playerData["userID"] === data["bootPlayerID"]){
             history.push(
                 {
                     "pathname" : '/wordGrid'
                 }
             )
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect( ()=>{
@@ -116,7 +106,7 @@ function WordGridWaiting(props:any) {
             wordGridSocket.off("start-game", handleStartGame);
             wordGridSocket.off("booted-player", handleBootedPlayer)
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wordGridSocket, handleJoinedRoom, handleNewPlayer, handleStartGame, handleBootedPlayer])
     
 
@@ -150,6 +140,7 @@ function WordGridWaiting(props:any) {
             bootPlayerID
         }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -219,7 +210,7 @@ function WordGridWaiting(props:any) {
         </tbody>
         </table>
         { 
-            playerList.length == 0 ? <> Can't see any other players? <button onClick={()=>{refreshPage()}}>Refresh</button>  </>: <></> 
+            playerList.length === 0 ? <> Can't see any other players? <button onClick={()=>{refreshPage()}}>Refresh</button>  </>: <></> 
         }
         { playerData.gameLeader && <div> 
         <p>Ready?</p>

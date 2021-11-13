@@ -1,6 +1,6 @@
 
-import React, {useState, useRef, useContext, useEffect, useCallback} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
+import {useState, useContext, useEffect, useCallback} from 'react';
+import {useHistory} from 'react-router-dom';
 import useLocalStorage from "../hooks/useLocalStorage";
 import {SocketContext}  from '../context/socket2'
 
@@ -17,15 +17,15 @@ function CategoriesWaiting(props:any) {
     const [copySuccess, setCopySuccess] = useState('');
     const history = useHistory();
 
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage('gameID')
-    let [userName, setUserName] = useLocalStorage('userName')
     let [gameData, setGameData] = useLocalStorage('gameData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage('playerData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID')
-    let [userID, setUserID] = useLocalStorage('userID')
-    let [returning, setReturning] = useLocalStorage('returning')
     let [playerList, setPlayerList] = useLocalStorage('playerList')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [joined, setJoined] = useState(false);
 
     const handleJoinedRoom = useCallback(()=>{
@@ -36,6 +36,7 @@ function CategoriesWaiting(props:any) {
     const handleNewPlayer = useCallback( (data:any) =>{
         setPlayerList(data['playerList'])
         setGameData(data["gameData"])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleStartGame = useCallback((data:any)=>{
@@ -44,12 +45,14 @@ function CategoriesWaiting(props:any) {
                 "pathname" : '/categories-game-room'
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleSendStart = useCallback(()=>{
         console.log("START!")
         categoriesSocket.emit("send-start", {gameID})
         categoriesSocket.emit("start-timer", {gameID})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect( ()=>{
@@ -82,7 +85,7 @@ function CategoriesWaiting(props:any) {
             categoriesSocket.off("new-player", handleNewPlayer);
             categoriesSocket.off("start-game", handleStartGame);
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoriesSocket, handleJoinedRoom, handleNewPlayer, handleStartGame])
     
 
@@ -141,7 +144,7 @@ function CategoriesWaiting(props:any) {
         </tbody>
         </table>
         { 
-            playerList.length == 0 ? <> Can't see any other players? <button onClick={()=>{refreshPage()}}>Refresh</button>  </>: <></> 
+            playerList.length === 0 ? <> Can't see any other players? <button onClick={()=>{refreshPage()}}>Refresh</button>  </>: <></> 
         }
         { playerData.gameLeader && <div> 
         <p>3. Click start game:</p>

@@ -1,15 +1,8 @@
 
-import React, {useState, useRef, useContext} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Provider, useSelector, useDispatch} from "react-redux";
+import {useState,} from 'react';
+import {useHistory} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from "../hooks/useLocalStorage";
-
-type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
-}
 
 
 function CategoriesJoin(props:any) {
@@ -17,12 +10,14 @@ function CategoriesJoin(props:any) {
     const history = useHistory();
     
     const [userNameError, setUserNameError] = useState(false)
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage("gameID", '')
     let [userName, setUserName] = useLocalStorage("userName", '')
     let [userID, setUserID] = useLocalStorage("userID", '')
     let [returning, setReturning] = useLocalStorage("returning", '')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage("playerData", {})
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerList, setPlayerList] = useLocalStorage("playerList", [])
     
     function handleUserNameChange(event:any){

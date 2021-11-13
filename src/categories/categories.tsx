@@ -1,5 +1,5 @@
-import React, {useState, useReducer, useContext, useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useState, useReducer, useEffect} from 'react';
+import { useHistory} from 'react-router-dom';
 import Category from "../models";
 import sampleCategories from "./sampleCategories.json";
 import { v4 as uuidv4 } from 'uuid';
@@ -65,11 +65,14 @@ function CategoriesStart() {
 
     let [gameID, setGameID] = useLocalStorage('gameID', '')
     let [userName, setUserName] = useLocalStorage('userName', '')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameData, setGameData] = useLocalStorage('gameData', {})
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage('playerData', {})
     let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID', '')
     let [userID, setUserID] = useLocalStorage('userID', '')
     let [returning, setReturning] = useLocalStorage('returning', false)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerList, setPlayerList] = useLocalStorage('playerList', [])
 
     useEffect(() => {
@@ -77,8 +80,8 @@ function CategoriesStart() {
             "categories" : categoryList.list,
             "gameLetter" : gameLetter
         })
-        
-      }, [categoryList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoryList]);
 
 
     function newLetter(){
@@ -199,8 +202,6 @@ function CategoriesStart() {
             return
         }
         else {
-
-            
             history.push(
                 {
                     "pathname" : '/categories-waiting-room',

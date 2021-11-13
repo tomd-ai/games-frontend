@@ -1,46 +1,11 @@
-import React, {useState, useRef, useContext, useCallback, useEffect} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
+import {useState, useRef, useContext, useCallback, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from "../hooks/useLocalStorage";
-import {socket, wordGridSocketContext}  from '../context/socket2'
+import {wordGridSocketContext}  from '../context/socket2'
 import {setAllWordGridAnswers} from "../actions/actions";
 import {setNewWordGridBoard} from "../actions/actions";
 import {clearWordGridEnteredWords} from "../actions/actions"
-import { truncateSync } from 'fs';
-
-type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
-}
-
-// type AnswerList = [
-//     gameID : string,
-//     gameSessionID : string,
-//     userID : string,
-//     userName : string,
-//     dictionaryAnswers : Word[]
-// ]
-
-type Answers = [
-    {
-        key : string,
-        name: string,
-        answer? :string,
-        duplicate? : boolean
-    }
-]
-
-type Word = {
-    name: string,
-    definiton: string,
-    places: string[]
-}
-
-type MarkedRows = [
-    string[] 
-]
 
 type Answer = {
     word?: string
@@ -58,24 +23,23 @@ function WordGridScoring(props:any) {
     const history = useHistory();
     const wordGridSocket = useContext(wordGridSocketContext);
     
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage('gameID')
-    let [userName, setUserName] = useLocalStorage('userName')
-    // let [gameData, setGameData] = useLocalStorage('gameData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerData, setPlayerData] = useLocalStorage('playerData')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID')
-    let [userID, setUserID] = useLocalStorage('userID')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [returning, setReturning] = useLocalStorage('returning')
-    let [playerList, setPlayerList] = useLocalStorage('playerList')
+    
     let [counter, setCounter] = useState(0)
 
     let newGame = useRef(false)
     
     const newBoard = useRef({});
-    const enteredWordsRef = useRef<string[]>([])
 
     const isInitialMount = useRef(true)
 
-    let allWordGridAnswers = useSelector((s:any) => s.allWordGridAnswers)
     let gameData = useSelector((s:any) => s.wordGridGameData)
 
     let [allAnswers, setAllAnswers] = useState([])
@@ -92,7 +56,7 @@ function WordGridScoring(props:any) {
         console.log("using effect")
         console.log(newGame.current)
         
-        if (newGame.current == true){
+        if (newGame.current === true){
             console.log("actually using effect")
             console.log(newGame.current)
             console.log(newBoard.current)
@@ -106,7 +70,7 @@ function WordGridScoring(props:any) {
             setReturning(true)
             newGame.current = false
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [counter])
 
     const handleAnswerTable = useCallback( (data:any) => {
@@ -120,6 +84,7 @@ function WordGridScoring(props:any) {
         setAllDictionaryAnswers(data.dictionaryAnswers)
 
         // console.log(allWordGridAnswers)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // function wipeCurGameData (gameLeader:boolean) {
@@ -161,6 +126,7 @@ function WordGridScoring(props:any) {
                 "pathname" : "/wordGrid-waiting-room"
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -191,7 +157,7 @@ function WordGridScoring(props:any) {
             wordGridSocket.off("get-answers", handleAnswerTable);
             wordGridSocket.off("start-new-game", handleNewGameRequested);
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wordGridSocket, handleAnswerTable, handleNewGameRequested])
 
     const highlightCells = (path:string[]) => {
@@ -216,7 +182,7 @@ function WordGridScoring(props:any) {
 
         let rowList = []
 
-        for (var i = 0; i < longestArrLen; i++ ){
+        for (let i = 0; i < longestArrLen; i++ ){
             // console.log(i)
             let row: Array<AnswerList> = []
             allAnswers.forEach((answer:any)=>{

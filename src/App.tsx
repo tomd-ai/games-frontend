@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-// import WebSocketProvider, { WebSocketContext } from "./WebSocket";
-import { Provider } from 'react-redux';
 import GamesList from "./components/GamesList";
 import Header from "./components/Header";
 import Categories from "./categories/categories";
@@ -18,7 +15,6 @@ import WordGridGame from "./wordGrid/WordGridGame";
 import './App.css';
 import {SocketContext, socket} from "./context/socket2"
 import {PictureSocketContext, picturesocket} from "./context/socket2"
-import useLocalStorage from "./hooks/useLocalStorage";
 import WordGridSolver from './wordGridSolver/wordGridSolver';
 
 function App() {

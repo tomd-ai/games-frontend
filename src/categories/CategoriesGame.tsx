@@ -1,16 +1,9 @@
-import React, {useState, useRef, useContext, useCallback, useEffect} from 'react';
-import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Provider, useSelector, useDispatch} from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
+import {useState, useContext, useCallback, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import useLocalStorage from "../hooks/useLocalStorage";
 import Category from "../models";
 import {SocketContext}  from '../context/socket2'
 
-type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
-}
 
 type Answers = [
     {
@@ -25,27 +18,23 @@ function CategoriesGame(props:any) {
     
     const history = useHistory();
     const categoriesSocket = useContext(SocketContext);
-    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameID, setGameID] = useLocalStorage('gameID')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [userName, setUserName] = useLocalStorage('userName')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameData, setGameData] = useLocalStorage('gameData')
-    let [playerData, setPlayerData] = useLocalStorage('playerData')
-    let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [userID, setUserID] = useLocalStorage('userID')
-    let [returning, setReturning] = useLocalStorage('returning')
-    let [playerList, setPlayerList] = useLocalStorage('playerList')
 
     let [minutes, setMinutes] = useState("")
     let [seconds, setSeconds] = useState("")
     
     let [answers, setAnswers] = useState(gameData["categories"])
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [gameLetter, setGameLetter] = useState(gameData["gameLetter"])
     let [stopBus, setBus] = useState(false)
 
-    // const getGameLetter = () => {
-    //     setGameLetter(gameData["gameLetter"])
-    //     return gameLetter
-    // }
 
     const handleChange = (e:any) =>{
 
@@ -53,7 +42,7 @@ function CategoriesGame(props:any) {
         let numAnswers = 0
         
         newAnswers = answers.map( (ans:any) =>{
-            if (e.target.id == ans.key){
+            if (e.target.id === ans.key){
                 ans["answer"] = e.target.value
                 
                 numAnswers += ans["answer"] && ans["answer"].charAt(0).toLowerCase() === gameLetter.toLowerCase() ? 1 : 0
@@ -66,7 +55,7 @@ function CategoriesGame(props:any) {
             return ans
         })
 
-        if (numAnswers == answers.length){
+        if (numAnswers === answers.length){
             setBus(true)
         }else{
             setBus(false)
@@ -90,6 +79,7 @@ function CategoriesGame(props:any) {
                 "pathname" : '/categories-scoring',
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleTimerTick = useCallback((data: any)=>{
@@ -97,10 +87,10 @@ function CategoriesGame(props:any) {
         setMinutes(data["minutes"])
         setSeconds(data["seconds"])
         
-        if ( data["minutes"] == 0 && data["seconds"] == 0 ){
+        if ( data["minutes"] === 0 && data["seconds"] === 0 ){
             handleForceEndGame()
         }
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleForceEndGame = useCallback(()=>{
@@ -117,6 +107,7 @@ function CategoriesGame(props:any) {
                 "pathname" : '/categories-scoring',
             }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     
@@ -133,12 +124,9 @@ function CategoriesGame(props:any) {
             categoriesSocket.off("timer-tick", handleTimerTick);
             categoriesSocket.off("end-game", handleForceEndGame)
           };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoriesSocket, handleForceEndGame, handleTimerTick])
 
-
-
-    
     return (
     <div className="project">
         <h1>Let's play</h1>        

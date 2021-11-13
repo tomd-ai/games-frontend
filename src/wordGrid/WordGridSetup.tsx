@@ -1,31 +1,31 @@
-import {useState, useReducer, useContext, useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
-import Category from "../models";
+import {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from "../hooks/useLocalStorage";
 
 
-type BoardLayout = {
-    [key: string] : string
-}
 
 
 
 function WordGridSetup() {
 
     // random letter
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [userNameError, setUserNameError] = useState(false)
     
     const history = useHistory();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [playerList, setPlayerList] = useLocalStorage('playerList', [])
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [playerData, setPlayerData] = useLocalStorage('playerData', {})
+
     let [gameID, setGameID] = useLocalStorage('gameID', '')
     let [userName, setUserName] = useLocalStorage('userName', '')
-    // let [gameData, setGameData] = useLocalStorage('gameData', {})
-    let [playerData, setPlayerData] = useLocalStorage('playerData', {})
     let [gameSessionID, setGameSessionID] = useLocalStorage('gameSessionID', '')
     let [userID, setUserID] = useLocalStorage('userID', '')
     let [returning, setReturning] = useLocalStorage('returning', false)
-    let [playerList, setPlayerList] = useLocalStorage('playerList', [])
+    
 
     useEffect(()=>{
         // reset any local storage stuff to defaults
@@ -37,6 +37,7 @@ function WordGridSetup() {
         setUserID("")
         setReturning(false)
         setPlayerList([])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     function handleUserNameChange(event:any){
