@@ -3,7 +3,6 @@ import {useState, useContext, useEffect, useCallback} from 'react';
 import {useHistory} from 'react-router-dom';
 import useLocalStorage from "../hooks/useLocalStorage";
 import {SocketContext}  from '../context/socket2'
-import internal from 'stream';
 
 type Player = {
     userName: string,

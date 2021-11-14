@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import {useState, useReducer, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from "react-redux";
 import useLocalStorage from "../hooks/useLocalStorage";
-import sampleCategories from "../models/sampleCategories.json";
 import Category from "../models/Category";
 import {
     addCategory,
