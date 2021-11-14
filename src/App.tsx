@@ -18,9 +18,6 @@ import {PictureSocketContext, picturesocket} from "./context/socket2"
 import WordGridSolver from './wordGridSolver/wordGridSolver';
 
 function App() {
-    // TODO: boot people out
-    // TODO: keep score
-    // 
     return (
         <PictureSocketContext.Provider value={picturesocket}>
         <SocketContext.Provider value={socket}>

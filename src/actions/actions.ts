@@ -3,6 +3,28 @@ interface ReduxAction {
     payload?: any
 }
 
+// categories
+
+export const addCategory = (payload: any): ReduxAction => ({
+    type: "ADD_CATEGORY",
+    payload: payload
+})
+
+export const removeCategory = (payload: any): ReduxAction => ({
+    type: "REMOVE_CATEGORY",
+    payload: payload
+})
+
+export const updateCategory = (payload: any): ReduxAction => ({
+    type: "UPDATE_CATEGORY",
+    payload: payload
+})
+
+export const resetCategories = (): ReduxAction => ({
+    type: "RESET_CATEGORIES",
+})
+
+
 // wordgrid
 
 export const addWordGridWord = (payload: any): ReduxAction => ({

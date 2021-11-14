@@ -31,7 +31,6 @@ function WordGridSetup() {
         // reset any local storage stuff to defaults
         setGameID("")
         setUserName("")
-        // setGameData({})
         setPlayerData({})
         setGameSessionID("")
         setUserID("")

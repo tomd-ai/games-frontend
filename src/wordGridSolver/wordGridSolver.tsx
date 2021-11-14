@@ -138,10 +138,8 @@ function WordGridSolver(props:any) {
         
         </div>
         <div className="webcamScreenshot">
-            
+
         </div>
-        
-        
 
         <table className="wordGridTable" style={{tableLayout: "fixed"}}>
             <thead>

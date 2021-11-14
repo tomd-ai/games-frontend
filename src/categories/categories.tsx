@@ -1,49 +1,17 @@
-import {useState, useReducer, useEffect} from 'react';
-import { useHistory} from 'react-router-dom';
-import Category from "../models";
-import sampleCategories from "./sampleCategories.json";
 import { v4 as uuidv4 } from 'uuid';
+import {useState, useReducer, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useSelector, useDispatch} from "react-redux";
 import useLocalStorage from "../hooks/useLocalStorage";
+import sampleCategories from "../models/sampleCategories.json";
+import Category from "../models/Category";
+import {
+    addCategory,
+    removeCategory,
+    updateCategory,
+    resetCategories
+} from "../actions/actions"
 
-
-const categoriesReducer = (state:any, action:any) => {
-    switch (action.type) {
-        case 'REMOVE_ITEM':
-            return ({
-            ...state,
-            list : state.list.filter((item:Category) => item.key !== action.key)
-            })
-        case 'ADD_ITEM':
-            return ({
-                ...state,
-                list : state.list.concat({name: action.name, key: action.key, answer: ""})
-            })
-        case 'UPDATE_ITEM':
-            return ({
-                ...state,
-                list : state.list.map(
-                    (category: Category) => {
-                        if (action.key === category.key){
-                            const updatedItem = {
-                                ...category,
-                                name : action.name
-                            };
-                            return updatedItem
-                        }else{
-                            return category
-                        }
-                    }
-                )
-            })
-        case 'RESET_LIST':
-            return ({
-                ...state,
-                list : sampleCategories
-            })
-      default:
-        throw new Error();
-    }
-};
 
 function randomLetter(){
     return String.fromCharCode(65+Math.floor(Math.random() * 26))
@@ -52,11 +20,13 @@ function randomLetter(){
 
 function CategoriesStart() {
 
+    const dispatch = useDispatch();
+
     // random letter
     const [gameLetter, setLetter] = useState(randomLetter())
-    const [categoryList, dispatchListData] =  useReducer(categoriesReducer, {
-        list: sampleCategories
-    });
+    // const [categoryList, dispatchListData] =  useReducer(categoriesReducer, {
+    //     list: sampleCategories
+    // });
     const [userNameError, setUserNameError] = useState(false)
     const [categoryError, setCategoryError] = useState(false)
     
@@ -75,72 +45,90 @@ function CategoriesStart() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [playerList, setPlayerList] = useLocalStorage('playerList', [])
 
+    let categoryList = useSelector((s:any) => s.categoryList)
+
     useEffect(() => {
-        return setGameData({
-            "categories" : categoryList.list,
-            "gameLetter" : gameLetter
-        })
+        return setGameData(
+            {
+                "categories" : categoryList.categoryList,
+                "gameLetter" : gameLetter
+            }
+        )
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoryList]);
 
 
     function newLetter(){
-        
         let newLetter = randomLetter()
-        
         setLetter(newLetter)
-        
         setGameData(
             {
-                "categories" : categoryList.list,
+                "categories" : categoryList.categoryList,
                 "gameLetter" : newLetter
             }
         )
     }
 
     // category list
-    
 
     function handleChange(event : any){
-        
-        dispatchListData({"type" : "UPDATE_ITEM", key: event.target.id, name : event.target.value })
-        
+        dispatch(
+            updateCategory(
+                {
+                    key: event.target.id,
+                    name: event.target.value
+                }
+            )
+        )
         setGameData(
             {
-                "categories" : categoryList.list,
+                "categories" : categoryList.categoryList,
                 "gameLetter" : gameLetter
             }
         )
-    
     }
   
     function handleRemove(key : string){
-        dispatchListData({type:"REMOVE_ITEM", "key" : key })
+        dispatch(
+            removeCategory(
+                {
+                    key: key
+                }
+            )
+        )
         setGameData(
             {
-                "categories" : categoryList.list,
+                "categories" : categoryList.categoryList,
                 "gameLetter" : gameLetter
             }
         )
     }
 
     function handleAdd(){
-        console.log("clicked handle")
-        dispatchListData({type:"ADD_ITEM", key: uuidv4()})
+        dispatch(
+            addCategory(
+                {
+                    key: uuidv4()
+                }
+            )
+        )
+
+        console.log(categoryList.categoryList)
         setGameData(
             {
-                "categories" : categoryList.list,
+                "categories" : categoryList.categoryList,
                 "gameLetter" : gameLetter
             }
         )
     }
 
     function handleReset(){
-        console.log("clicked reset")
-        dispatchListData({type:"RESET_LIST"})
+        dispatch(
+            resetCategories()
+        )
         setGameData(
             {
-                "categories" : categoryList.list,
+                "categories" : categoryList.categoryList,
                 "gameLetter" : gameLetter
             }
         )
@@ -194,11 +182,11 @@ function CategoriesStart() {
         )
 
         // check that the player has at least one category
-        setCategoryError(categoryList.list.length === 0) 
+        setCategoryError(categoryList.categoryList.length === 0) 
         setUserNameError(!userName)
 
         // check that the player has added a username
-        if ((categoryList.list.length === 0) || (!userName)){
+        if ((categoryList.categoryList.length === 0) || (!userName)){
             return
         }
         else {
@@ -235,11 +223,12 @@ function CategoriesStart() {
         <p>1. (Optional) Change or add more categories:</p>
         <p className="explainer">Click a category to change the name, or the button to remove it. </p>
         { 
-            categoryList.list.map(
+            categoryList.categoryList.map(
                 (category: Category) => {
                     return (
                     <div className="category">
                         <input
+                            key={category.key}
                             type="text" 
                             id={category.key} 
                             defaultValue={category.name}
@@ -256,7 +245,7 @@ function CategoriesStart() {
 
         <button
             type="button"
-            onClick={() =>handleAdd()}
+            onClick={()=>handleAdd()}
             style={{
                 "marginRight": "5px"
             }}
@@ -266,7 +255,7 @@ function CategoriesStart() {
 
         <button
             type="button"
-            onClick={() =>handleReset()}
+            onClick={()=>handleReset()}
         >
             Reset to default
         </button>

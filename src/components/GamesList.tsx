@@ -1,22 +1,23 @@
 import GameItem from "./GameItem";
-import allGames from "../gamedata";
+import allGames from "../models/gamedata.json";
 
-type game = {
-    id : string,
-    name : string,
+interface game {
+    gameID: string,
+    name: string,
     biline: string,
     url: string
 }
 
 function GamesList() {
-    return <div className="blog-list">
+
+    return <div className="game-list">
         <div className="about-message">
           <p>Click an option below to start a game!</p>
         </div>
         { 
             allGames.map(
-                (game: game) => {
-                    return <GameItem id={game.id} name={game.name} biline={game.biline} url={game.url} />
+                (game:game) => {
+                    return <GameItem gameID={game.gameID} name={game.name} biline={game.biline} url={game.url} />
                 }
             )
         }

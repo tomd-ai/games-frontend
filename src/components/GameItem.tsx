@@ -1,25 +1,27 @@
 import {Link} from 'react-router-dom';
 
-type blogData = {
-    id : string,
+type gameData = {
+    gameID : string,
     name : string,
     url: string,
     biline: string
 }
 
 
-function BlogItem(blogData: blogData) {
+function GameItem(gameData: gameData) {
     return (
-    <Link to={blogData.id}>
-      <div className="blog-item">
+    <Link to={gameData.gameID}>
+      <div className="game-item">
           
-              {blogData.name}
-              <p style={{fontSize:"smaller"}}>
-                  {blogData.biline}
+              <p>
+                  {gameData.name}
+              </p>
+              <p style={{fontSize:"24px"}}>
+                  {gameData.biline}
               </p>
       </div>
     </Link>
     );
   }
   
-  export default BlogItem;
+  export default GameItem;

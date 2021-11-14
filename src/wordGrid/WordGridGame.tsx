@@ -100,7 +100,6 @@ function WordGridGame(props:any) {
         
         if (data["inDict"]){
     
-            
             dispatch(
                 addWordGridWord(
                     {
@@ -110,10 +109,9 @@ function WordGridGame(props:any) {
             )
 
             enteredWordsRef.current = [...enteredWordsRef.current, data["word"]]
-            
+
             console.log(enteredWordsRef)
-            // setEnteredWords([data["word"], ...enteredWords])
-            
+
             setNewWord("")
         }else{
             setErrorStatus("showError")
@@ -213,7 +211,6 @@ function WordGridGame(props:any) {
         <p>
             Enter words
         </p>
-        {/* <form onSubmit={()=>{return false}}> */}
         <input 
             autoComplete="off"
             type="text" 
@@ -230,8 +227,6 @@ function WordGridGame(props:any) {
         <button className="add-word"  onClick={e=>{
             addWord(newWord)
         }}>Add word</button>
-
-        {/* </form> */}
 
         { playerData.gameLeader && <div> 
             <button className="end-game" onClick={handleForceEndGame}>Force End Game</button>

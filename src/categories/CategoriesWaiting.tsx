@@ -3,11 +3,14 @@ import {useState, useContext, useEffect, useCallback} from 'react';
 import {useHistory} from 'react-router-dom';
 import useLocalStorage from "../hooks/useLocalStorage";
 import {SocketContext}  from '../context/socket2'
+import internal from 'stream';
 
 type Player = {
-    userName : string,
-    userID : string,
-    gameLeader? : boolean
+    userName: string,
+    userID: string,
+    gameLeader?: boolean,
+    gamesWon?: number,
+    totalPoints?: number
 }
 
 
@@ -27,6 +30,10 @@ function CategoriesWaiting(props:any) {
     let [playerList, setPlayerList] = useLocalStorage('playerList')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [joined, setJoined] = useState(false);
+
+    const baseJoinLink = ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ? "http://localhost:3000" : "https://tomd-ai.github.io"
+    const joinLink = `${baseJoinLink}/games-frontend#/join-categories/${gameID}`
+
 
     const handleJoinedRoom = useCallback(()=>{
         setJoined(true)
@@ -91,12 +98,7 @@ function CategoriesWaiting(props:any) {
 
     // direct link 
     function linkToClipboard(e:any){
-        
-        let baseJoinLink = ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ? "http://localhost:3000" : "https://tomd-ai.github.io"
-
-        navigator.clipboard.writeText(`${baseJoinLink}/games-frontend#/join-categories/${gameID}`)
-        // This is just personal preference.
-        // I prefer to not show the whole text area selected.
+        navigator.clipboard.writeText(joinLink)
         e.target.focus();
         setCopySuccess('Copied!');
     }
@@ -113,13 +115,22 @@ function CategoriesWaiting(props:any) {
 
         <p>A multiplayer game - find a word that starts with the following letter for each category!</p>
         
-        <p>Your game id is: <span className="gameID">{gameID}</span></p>
-        <button onClick={(e)=>{linkToClipboard(e)}}>Click to copy direct link</button>
+        {/* <p>Your game id is: <span className="gameID">{gameID}</span></p> */}
+        <input readOnly value={joinLink} />
+        <button onClick={(e)=>{linkToClipboard(e)}}>Copy invite link</button>
         <p>{copySuccess}</p>
 
-        <p>Current players:</p>
-        <table>
+        <table className="waitingTable" style={{"borderCollapse": "collapse"}}>
         <thead>
+            <th>
+                Player
+            </th>
+            <th>
+                Games won
+            </th>
+            <th>
+                Total score
+            </th>
         </thead>
         <tbody>
             {
@@ -128,14 +139,20 @@ function CategoriesWaiting(props:any) {
                             return (
                             <tr key={player.userID}>
                                 <td>
-                                    {ind + 1}.
+                                    {player.userName} {player.gameLeader ?  " (Game leader)" : "" }
                                 </td>
-                                <td>
-                                    {player.userName}
-                                </td>
-                                <td>
-                                    {player.gameLeader ?  " (Game leader)" : "" }
-                                </td>
+                                {
+                                    player.gamesWon ?
+                                    <td>
+                                        {player.gamesWon} 
+                                    </td>: <td>0</td>
+                                    }
+                                    {
+                                    player.totalPoints ?
+                                    <td>
+                                        {player.totalPoints}
+                                    </td> : <td>0</td>
+                                    }
                             </tr>
                             )
                         }
@@ -147,7 +164,7 @@ function CategoriesWaiting(props:any) {
             playerList.length === 0 ? <> Can't see any other players? <button onClick={()=>{refreshPage()}}>Refresh</button>  </>: <></> 
         }
         { playerData.gameLeader && <div> 
-        <p>3. Click start game:</p>
+        <p>All players ready?</p>
             <button className="start-game" onClick={()=>{handleSendStart()}}>Start Game</button>
         </div>
         }

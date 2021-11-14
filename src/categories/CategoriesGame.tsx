@@ -1,7 +1,7 @@
 import {useState, useContext, useCallback, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import useLocalStorage from "../hooks/useLocalStorage";
-import Category from "../models";
+import Category from "../models/Category";
 import {SocketContext}  from '../context/socket2'
 
 
@@ -129,7 +129,7 @@ function CategoriesGame(props:any) {
 
     return (
     <div className="project">
-        <h1>Let's play</h1>        
+        <h1>Let's play</h1>
         <p>Time left: {minutes ? minutes.toString() + " minute" : "" } { seconds ? seconds.toString() + " seconds" : "Game ended"}</p>
         <p>Enter something for each category that starts with:</p>
         <p><span className="gameLetter" style={{fontSize: "55px"}}>{gameLetter}</span></p>
@@ -153,7 +153,7 @@ function CategoriesGame(props:any) {
                                 onChange={(e)=>handleChange(e)}
                             />
                         </td>
-                        <td>
+                        <td style={{textAlign: "center"}}>
                             <p className={ category["answer"] && category["answer"].charAt(0).toLowerCase() !== gameLetter.toLowerCase() ? "showError" : "hideError" }>Category has to start with {gameLetter}!</p>
                         </td>
                     </tr>

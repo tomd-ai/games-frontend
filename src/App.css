@@ -42,7 +42,7 @@
 }
 
 
-.blog-list {
+.game-list {
     color: white;
 }
 
@@ -50,7 +50,7 @@
     font-size: smaller;
 }
 
-.blog-item {
+.game-item {
     background-color: #36383b;
     border: 2px solid #36383b;
     padding: 5px 5px 5px 5px;
@@ -105,11 +105,13 @@ select {
 }
 
 .showError{
-    color : red
+    color: red;
+    font-size: 12px;
 }
 
 .hideError{
-    display : none
+    display: none;
+    
 }
 
 .gameAnswers{
@@ -191,7 +193,7 @@ select {
     border-style: solid;
 }
 
-.wordGridTable {
+.wordGridTable,.waitingTable {
     margin-left: auto;
     margin-right: auto;
     cursor: pointer;
@@ -199,7 +201,7 @@ select {
 }
 
 
-.wordGridTable td {
+.wordGridTable,.waitingTable td {
     border: 1px white solid;
     margin-left: auto;
     margin-right: auto;
