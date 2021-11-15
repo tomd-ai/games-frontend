@@ -34,6 +34,10 @@ function WordGridWaiting(props:any) {
     let gameData = useSelector((s:any) => s.wordGridGameData)
     let [playerList, setPlayerList] = useLocalStorage('playerList')
 
+    const baseJoinLink = ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ? "http://localhost:3000" : "https://tomd-ai.github.io"
+    const joinLink = `${baseJoinLink}/games-frontend#/join-wordGrid/${gameID}`
+
+
     // TODO: dump this so the build process works
 
     const handleJoinedRoom = useCallback(()=>{
@@ -112,10 +116,7 @@ function WordGridWaiting(props:any) {
 
     // direct link 
     function linkToClipboard(e:any){
-        
-        let baseJoinLink = ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ? "http://localhost:3000" : "https://tomd-ai.github.io"
-
-        navigator.clipboard.writeText(`${baseJoinLink}/games-frontend#/join-wordGrid/${gameID}`)
+        navigator.clipboard.writeText(joinLink)
         // This is just personal preference.
         // I prefer to not show the whole text area selected.
         e.target.focus();
@@ -146,18 +147,28 @@ function WordGridWaiting(props:any) {
 
     return (
     <div className="project">
-        <h1>WordGrid</h1>
+        <h1>Word Grid</h1>
         <h4>Waiting room</h4>
-
+        
+        <div 
+            className="explainer"
+            style={{
+                textAlign: "left",
+                border: "solid 2px white",
+                borderRadius: "10px",
+            }}
+        >
         <p>Rules</p>
         <ol>
             <li>The word has to be made up of letters that are next to each other.</li>
             <li>In each word, a letter on the board can only be used once.</li>
             <li>Words must be at least 4 letters long.</li>
         </ol>
+        </div>
 
-        <p>Your game id is: <span className="gameID">{gameID}</span></p>
-        <button onClick={(e)=>{linkToClipboard(e)}}>Click to copy direct link</button>
+        <p className="explainer" style={{marginBottom:"10px"}} >Share this link to invite friends</p>
+        <input readOnly style={{width:"400px"}} value={joinLink}/>
+        <button style={{marginLeft: "20px"}} onClick={(e)=>{linkToClipboard(e)}}>Copy direct invite link</button>
         <p>{copySuccess}</p>
 
         <p>Current players:</p>
