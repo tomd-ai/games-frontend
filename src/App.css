@@ -193,15 +193,27 @@ select {
     border-style: solid;
 }
 
-.wordGridTable,.waitingTable {
+.wordGridTable {
     margin-left: auto;
     margin-right: auto;
     cursor: pointer;
     user-select:none;
 }
 
+.waitingTable {
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    user-select:none;
+}
 
-.wordGridTable,.waitingTable td {
+.wordGridTable td {
+    border: 1px white solid;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px
+}
+.waitingTable td {
     border: 1px white solid;
     margin-left: auto;
     margin-right: auto;

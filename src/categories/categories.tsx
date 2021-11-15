@@ -23,9 +23,7 @@ function CategoriesStart() {
 
     // random letter
     const [gameLetter, setLetter] = useState(randomLetter())
-    // const [categoryList, dispatchListData] =  useReducer(categoriesReducer, {
-    //     list: sampleCategories
-    // });
+
     const [userNameError, setUserNameError] = useState(false)
     const [categoryError, setCategoryError] = useState(false)
     
